@@ -47,8 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
             decoration: const InputDecoration(
               hintText: 'Enter TAG separate with comma (,)',
             ),
-            valueChange: (value) {
-              log('${value}');
+            onValueChanged: (value) {
+              log('$value');
             },
           ),
         ),

@@ -1,19 +1,51 @@
 import 'package:flutter/material.dart';
 
 class TagFieldWidget extends StatefulWidget {
-  const TagFieldWidget({super.key, this.decoration, this.valueChange});
+  const TagFieldWidget({
+    super.key,
+    this.decoration,
+    this.onValueChanged,
+  });
 
   final InputDecoration? decoration;
-  final ValueChanged<List<String>>? valueChange;
+  final ValueChanged<List<String>>? onValueChanged;
 
   @override
   State<TagFieldWidget> createState() => _TagFieldWidgetState();
 }
 
 class _TagFieldWidgetState extends State<TagFieldWidget> {
-  List<String> values = [];
+  final List<String> _tags = [];
+  final TextEditingController _tagController = TextEditingController();
 
-  TextEditingController tagController = TextEditingController();
+  @override
+  void dispose() {
+    _tagController.dispose();
+    super.dispose();
+  }
+
+  void _addTags(String value) {
+    final newTags = value
+        .split(',')
+        .map((e) => e.trim())
+        .where((tag) => tag.isNotEmpty && !_tags.contains(tag))
+        .toList();
+
+    if (newTags.isNotEmpty) {
+      setState(() {
+        _tags.addAll(newTags);
+        _tagController.clear();
+      });
+      widget.onValueChanged?.call(_tags);
+    }
+  }
+
+  void _removeTag(int index) {
+    setState(() {
+      _tags.removeAt(index);
+    });
+    widget.onValueChanged?.call(_tags);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,56 +54,40 @@ class _TagFieldWidgetState extends State<TagFieldWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-          controller: tagController,
+          controller: _tagController,
           decoration: widget.decoration,
           maxLines: 1,
           textInputAction: TextInputAction.done,
           onChanged: (value) {
             if (value.contains(',')) {
-              setState(() {
-                value.split(',').forEach((e) {
-                  final labal = e.trim();
-                  if (!values.contains(labal)) {
-                    if (labal.isNotEmpty) {
-                      values.add(labal);
-                    }
-                  }
-                });
-                tagController.clear();
-                widget.valueChange?.call(values);
-              });
+              _addTags(value);
             }
           },
         ),
-        const SizedBox(
-          height: 8.0,
-        ),
-        (values.isNotEmpty)
-            ? Wrap(
-                children: List.generate(values.length, (i) {
-                  return buildChip(values[i], i);
-                }),
-              )
-            : const SizedBox(),
+        const SizedBox(height: 8.0),
+        if (_tags.isNotEmpty)
+          Wrap(
+            children: _tags
+                .asMap()
+                .entries
+                .map((entry) => _buildChip(entry.value, entry.key))
+                .toList(),
+          ),
       ],
     );
   }
 
-  Widget buildChip(String labal, int index) {
+  Widget _buildChip(String label, int index) {
     return Container(
       margin: const EdgeInsets.only(right: 4.0, top: 4.0, bottom: 4.0),
       child: Chip(
-          label: Text(labal),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
-          deleteIcon: const Icon(Icons.remove_circle),
-          onDeleted: () {
-            setState(() {
-              values.removeAt(index);
-              widget.valueChange?.call(values);
-            });
-          }),
+        label: Text(label),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+        deleteIcon: const Icon(Icons.remove_circle),
+        onDeleted: () => _removeTag(index),
+      ),
     );
   }
 }
