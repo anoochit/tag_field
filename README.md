@@ -5,12 +5,12 @@ Sample code
 
 
 ```dart
-TagFieldWidget(
+TagFormField(
   decoration: const InputDecoration(
     hintText: 'Enter TAG separate with comma (,)',
   ),
-  valueChange: (value) {
-    log('${value}');
+  onValueChanged: (value) {
+    log('$value');
   },
 ),
 ```

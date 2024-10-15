@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Container(
           margin: const EdgeInsets.all(16.0),
-          child: TagFieldWidget(
+          child: TagFormField(
             decoration: const InputDecoration(
               hintText: 'Enter TAG separate with comma (,)',
             ),

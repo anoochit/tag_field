@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TagFieldWidget extends StatefulWidget {
-  const TagFieldWidget({
+class TagFormField extends StatefulWidget {
+  const TagFormField({
     super.key,
     this.decoration,
     this.onValueChanged,
@@ -11,10 +11,10 @@ class TagFieldWidget extends StatefulWidget {
   final ValueChanged<List<String>>? onValueChanged;
 
   @override
-  State<TagFieldWidget> createState() => _TagFieldWidgetState();
+  State<TagFormField> createState() => _TagFormFieldState();
 }
 
-class _TagFieldWidgetState extends State<TagFieldWidget> {
+class _TagFormFieldState extends State<TagFormField> {
   final List<String> _tags = [];
   final TextEditingController _tagController = TextEditingController();
 
