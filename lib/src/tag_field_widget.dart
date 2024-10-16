@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 
+/// A form field widget for inputting and displaying tags.
+///
+/// This widget allows users to input tags as a comma-separated list
+/// and displays them as chips. Users can also remove tags by tapping
+/// on the delete icon in each chip.
 class TagFormField extends StatefulWidget {
+  /// Creates a [TagFormField].
+  ///
+  /// The [decoration] parameter can be used to customize the appearance
+  /// of the input field.
+  ///
+  /// The [onValueChanged] callback is called whenever the list of tags
+  /// is modified.
   const TagFormField({
     super.key,
     this.decoration,
     this.onValueChanged,
   });
 
+  /// The decoration to show around the text field.
   final InputDecoration? decoration;
+
+  /// Called when the list of tags changes.
   final ValueChanged<List<String>>? onValueChanged;
 
   @override
@@ -15,7 +30,10 @@ class TagFormField extends StatefulWidget {
 }
 
 class _TagFormFieldState extends State<TagFormField> {
+  /// The list of current tags.
   final List<String> _tags = [];
+
+  /// Controller for the text input field.
   final TextEditingController _tagController = TextEditingController();
 
   @override
@@ -24,6 +42,10 @@ class _TagFormFieldState extends State<TagFormField> {
     super.dispose();
   }
 
+  /// Adds new tags from the input value.
+  ///
+  /// This method splits the input by commas, trims whitespace,
+  /// removes duplicates, and adds new tags to the list.
   void _addTags(String value) {
     final newTags = value
         .split(',')
@@ -40,6 +62,7 @@ class _TagFormFieldState extends State<TagFormField> {
     }
   }
 
+  /// Removes a tag at the specified index.
   void _removeTag(int index) {
     setState(() {
       _tags.removeAt(index);
@@ -77,6 +100,9 @@ class _TagFormFieldState extends State<TagFormField> {
     );
   }
 
+  /// Builds a chip widget for a single tag.
+  ///
+  /// The chip includes the tag label and a delete button.
   Widget _buildChip(String label, int index) {
     return Container(
       margin: const EdgeInsets.only(right: 4.0, top: 4.0, bottom: 4.0),

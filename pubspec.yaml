@@ -1,7 +1,7 @@
 name: tag_field
 description: "A tag field widget."
 version: 0.0.1
-homepage: https://github.com/anoochit/tag_field
+homepage: https://github.com/anoochit/tag_form_field
 
 environment:
   sdk: ^3.5.3
