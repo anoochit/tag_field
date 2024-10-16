@@ -16,7 +16,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  tag_form_field: ^1.0.0
+  tag_form_field: ^0.0.1
 ```
 
 Then run:
