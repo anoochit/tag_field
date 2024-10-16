@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:tag_field/tag_field.dart';
+import 'package:tag_form_field/tag_field.dart';
 
 void main() {
   runApp(const MyApp());
