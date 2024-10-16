@@ -1,6 +1,6 @@
 name: tag_form_field
 description: "TagFormField is a customizable Flutter widget that allows users to input and display tags in a form field."
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/anoochit/tag_form_field
 
 environment:
